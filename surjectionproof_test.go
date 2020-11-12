@@ -102,7 +102,7 @@ func TestMaybeInvalidProof(t *testing.T) {
 	defer ContextDestroy(ctx)
 
 	outputAsset := h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a")
-	outputBf := h2b("24462ea36908c31d4f6c1096b442623ee27677ed9bae5f8614b5f4e0fca334d3")
+	outputBf := h2b("b919547b0fe215b1cc259f97ae435d6140d6d68ab62b6ceae216af48a75ed8dd")
 
 	outputGenerator, err := GeneratorGenerateBlinded(ctx, outputAsset, outputBf)
 	if err != nil {
@@ -112,13 +112,11 @@ func TestMaybeInvalidProof(t *testing.T) {
 	inputGenerators := make([]Generator, 0)
 	inputAssets := [][]byte{
 		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
-		h2b("a613c0dada8dfe29e2e135ef6ce15ae049c84cbc723f702148e9c01b965d5dbc"),
-		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
+		h2b("ed167d1b67cf8c72fdc105e7499003a06745e2c42c7d32ed33d3c6dae06a96dd"),
 	}
 	inputAbfs := [][]byte{
-		h2b("25e369cb9e734d7065f47097a89f923342d986c4456c1525d91d62620b17b842"),
-		h2b("37e1ae117f13f3a51d7ff407caf3b9b53bd2ee86817e72924fb6ca8cb1f345ef"),
-		h2b("e5c31bf5f833d5a5cbab21e16a618bf1572481d4bad51754ec12cdd605ae2935"),
+		h2b("11a0828ded4fa0ebcffced49d7e8118ceba3484363486d43ce04fbbb756dfbf9"),
+		h2b("25dde14dd92c0594a3765667ad0ba3263298426e5c5cf38148587a9cd3b2f936"),
 	}
 	for i, v := range inputAssets {
 		gen, err := GeneratorGenerateBlinded(ctx, v, inputAbfs[i])
@@ -128,49 +126,79 @@ func TestMaybeInvalidProof(t *testing.T) {
 		inputGenerators = append(inputGenerators, *gen)
 	}
 
-	proof, err := SurjectionProofFromString("030007087cb161d9db297f23da2ed4a2db7e9e7f7d31f456925e2d0959a5668cf964356495f703ad1af43cd464099e8134e22defcf64a0d9606895d32aded361e28f39de0da014114c0d89d52049253f1bf182f578679dbb388603afa708fee3bee8977031053a134a57de57f66ae51b70e1f153cc13c47a75c2ad0afd313cea1e7402")
+	proof, err := SurjectionProofFromString("0200033e8c1bb14b8bb3163102181b7f932515dad5e5ec02e6d32180c04aad77ec8f0ea12653e52cfc8f6d7854c3d671dda156a2dffa750a08f7c4a04b4644559879a46be28a1aa499f8b9068326f3a0bf764b4a8cb67d80f60d0d856118170e5787b4")
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator))
+	for i := 0; i < 10; i++ {
+		fmt.Println(SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator))
+	}
 }
 
 func TestMaybeValidProof(t *testing.T) {
 	ctx, _ := ContextCreate(ContextBoth)
 	defer ContextDestroy(ctx)
 
-	outputAsset := h2b("a613c0dada8dfe29e2e135ef6ce15ae049c84cbc723f702148e9c01b965d5dbc")
-	outputBf := h2b("202c99a516a7188db0d56a713ede15c6527daff3094acdfbaf8b46556d27b205")
-
-	outputGenerator, err := GeneratorGenerateBlinded(ctx, outputAsset, outputBf)
-	if err != nil {
-		t.Fatal(err)
+	outputAssets := [][]byte{
+		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
+		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
+	}
+	outputBfs := [][]byte{
+		h2b("06f82730207a7d18f56b67b8232a2183afec39080369b32b83e276017359c329"),
+		h2b("06f82730207a7d18f56b67b8232a2183afec39080369b32b83e276017359c329"),
+		h2b("b919547b0fe215b1cc259f97ae435d6140d6d68ab62b6ceae216af48a75ed8dd"),
 	}
 
-	inputGenerators := make([]Generator, 0)
 	inputAssets := [][]byte{
 		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
-		h2b("a613c0dada8dfe29e2e135ef6ce15ae049c84cbc723f702148e9c01b965d5dbc"),
-		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
+		h2b("ed167d1b67cf8c72fdc105e7499003a06745e2c42c7d32ed33d3c6dae06a96dd"),
 	}
 	inputAbfs := [][]byte{
-		h2b("25e369cb9e734d7065f47097a89f923342d986c4456c1525d91d62620b17b842"),
-		h2b("37e1ae117f13f3a51d7ff407caf3b9b53bd2ee86817e72924fb6ca8cb1f345ef"),
-		h2b("e5c31bf5f833d5a5cbab21e16a618bf1572481d4bad51754ec12cdd605ae2935"),
-	}
-	for i, v := range inputAssets {
-		gen, err := GeneratorGenerateBlinded(ctx, v, inputAbfs[i])
-		if err != nil {
-			t.Fatal(err)
-		}
-		inputGenerators = append(inputGenerators, *gen)
+		h2b("11a0828ded4fa0ebcffced49d7e8118ceba3484363486d43ce04fbbb756dfbf9"),
+		h2b("25dde14dd92c0594a3765667ad0ba3263298426e5c5cf38148587a9cd3b2f936"),
 	}
 
-	proof, err := SurjectionProofFromString("030007a435a8a2ca2ea9693c8ec6b6977b35282e93ff34a0733fad8e4712783caf6bbd8dad5297a45b23f807ee0ff588b3914383508e6e44aeffc019b0b6c96bca547b8689853f4648f1559423bfbb3d03df199617332b28739d55e190ca82406270ec444dcda442cd9cdae5d033c4a5d3373583c3cb9c4a60fff4a7cdff79874d5146")
-	if err != nil {
-		t.Fatal(err)
+	proofs := []string{
+		"0200033e70e62dc661225a43f244ac54110cf68a855544be210442ca47e91e5580705dc0955a93a957f4a336cfec7df190c7df0c84fe86f31b51cae3ea1877304cd5a85d516a4e921dd3645783cd41fca8d519783a57dc14767946af0d4fa223d65392",
+		"0200033e70e62dc661225a43f244ac54110cf68a855544be210442ca47e91e5580705dc0955a93a957f4a336cfec7df190c7df0c84fe86f31b51cae3ea1877304cd5a85d516a4e921dd3645783cd41fca8d519783a57dc14767946af0d4fa223d65392",
+		"0200033e8c1bb14b8bb3163102181b7f932515dad5e5ec02e6d32180c04aad77ec8f0ea12653e52cfc8f6d7854c3d671dda156a2dffa750a08f7c4a04b4644559879a46be28a1aa499f8b9068326f3a0bf764b4a8cb67d80f60d0d856118170e5787b4",
 	}
-	fmt.Println(SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator))
+
+	for j := 0; j < 100; j++ {
+		var firstRes, secondRes, thirdRes bool
+		for i, outputAsset := range outputAssets {
+			outputBf := outputBfs[i]
+
+			outputGenerator, err := GeneratorGenerateBlinded(ctx, outputAsset, outputBf)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			inputGenerators := make([]Generator, 0)
+			for i, v := range inputAssets {
+				gen, err := GeneratorGenerateBlinded(ctx, v, inputAbfs[i])
+				if err != nil {
+					t.Fatal(err)
+				}
+				inputGenerators = append(inputGenerators, *gen)
+			}
+
+			proof, err := SurjectionProofFromString(proofs[i])
+			if err != nil {
+				t.Fatal(err)
+			}
+			if i == 0 {
+				firstRes = SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator)
+			}
+			if i == 1 {
+				secondRes = SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator)
+			}
+			if i == 2 {
+				thirdRes = SurjectionProofVerify(ctx, proof, inputGenerators, *outputGenerator)
+			}
+		}
+		fmt.Println(firstRes, secondRes, thirdRes)
+	}
 }
 
 func h2b(str string) []byte {
