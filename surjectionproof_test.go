@@ -142,6 +142,7 @@ func TestMaybeValidProof(t *testing.T) {
 	outputAssets := [][]byte{
 		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
 		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
+		h2b("25b251070e29ca19043cf33ccd7324e2ddab03ecc4ae0b5e77c4fc0e5cf6c95a"),
 	}
 	outputBfs := [][]byte{
 		h2b("06f82730207a7d18f56b67b8232a2183afec39080369b32b83e276017359c329"),
