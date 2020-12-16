@@ -1,0 +1,36 @@
+{
+  "tweakAdd": [
+    {
+      "key": "0000f0ffffffff7f0000000000f8ffffff01f007000000000000ff3f00000000",
+      "scalar": "0f0000fcff7fe0ffffffffffffffffffffffffffffff1f000000000080ffff03",
+      "expected": "0f00f1fcff7fe07f0000000000f8ffffff01f006ffff1f000000ff3f80ffff03"
+    },
+    {
+      "key": "00000000000000e0ffbffffffbffffffffffffff1f0000000000000000ffffff",
+      "scalar": "ffffffff0f0000000000000000c0ffffff0f000000000000f0ff0f00000000fc",
+      "expected": "ffffffff0f0000e0ffbffffffcc0ffffff0effff1f000000f0ff0f00010000fb"
+    },
+    {
+      "key": "fc3f00000000e0fffffffcff0000c0010000000080ffffffffffffffff000000",
+      "scalar": "ffffffffffffffffff01ffff03feffffff0080ffffc3ffffffff0380ffffffff",
+      "expected": "fc3f00000000e0ffff01fcfe03ffc0024451a419d17b5fc4402ca4f42ec9bebe"
+    }
+  ],
+  "tweakMul": [
+    {
+      "key": "000000000000000000fcf77f00f8ffffffffffffffffffffffffffffffffffff",
+      "scalar": "0000feffff0ff0ffff07000000007e000000000000000000e0ff037c00000000",
+      "expected": "a0ec4ce7cee9e6b741de421b5f4032de8ffb94801453612c608c2038abd39527"
+    },
+    {
+      "key": "000000f81f000000007cff03000000c01f00ffffffffffff0700000000fcff0f",
+      "scalar": "ffff1f0004fcffffffff0300ffffffffffffff3f00000000003c00c0ffffffff",
+      "expected": "cb101413b0c2933f254e26e84f92a8ff186a2aaf8ae6b7090754431f54457da9"
+    },
+    {
+      "key": "ffffffffffffff070080ff0f00f03f0000000000000000000000000008000000",
+      "scalar": "000000000000ffffffff03fcffffff07000000000000feff7f00000000000000",
+      "expected": "8234219d73f143de4849f15cfc05710d6b3de118d8316314a897f17abcabad59"
+    }
+  ]
+}

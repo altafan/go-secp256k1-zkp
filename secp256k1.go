@@ -110,3 +110,29 @@ func SharedContext(flags uint) (context *Context) {
 
 	return
 }
+
+func ECPrivKeyNegate(ctx *Context, key []byte) []byte {
+	buf := make([]byte, len(key))
+	copy(buf, key)
+	// return value is always 1 for this native method
+	C.secp256k1_ec_privkey_negate(ctx.ctx, cBuf(buf))
+	return buf
+}
+
+func ECPrivKeyTweakAdd(ctx *Context, key, tweak []byte) ([]byte, bool) {
+	buf := make([]byte, len(key))
+	copy(buf, key)
+	if 1 != C.secp256k1_ec_privkey_tweak_add(ctx.ctx, cBuf(buf), cBuf(tweak)) {
+		return nil, false
+	}
+	return buf, true
+}
+
+func ECPrivKeyTweakMul(ctx *Context, key, tweak []byte) ([]byte, bool) {
+	buf := make([]byte, len(key))
+	copy(buf, key)
+	if 1 != C.secp256k1_ec_privkey_tweak_mul(ctx.ctx, cBuf(buf), cBuf(tweak)) {
+		return nil, false
+	}
+	return buf, true
+}
